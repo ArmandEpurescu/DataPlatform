@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Create Custom Task</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h1>Create a Custom ETL Task</h1>
+    <form method="post" action="/create_custom_task" class="border p-4 bg-white shadow-sm">
+        <div class="form-group">
+            <label for="task_name">Task Name:</label>
+            <input type="text" class="form-control" id="task_name" name="task_name" required>
+        </div>
+        <div class="form-group">
+            <label for="api_url">API URL:</label>
+            <input type="url" class="form-control" id="api_url" name="api_url" placeholder="https://jsonplaceholder.typicode.com/todos" required>
+        </div>
+        <div class="form-group">
+            <label for="interval">Interval (seconds):</label>
+            <input type="number" class="form-control" id="interval" name="interval" value="30" required>
+        </div>
+        <div class="form-group">
+            <label for="dependencies">Dependencies (comma-separated Task names):</label>
+            <input type="text" class="form-control" id="dependencies" name="dependencies" placeholder="FetchAPIData, SomeOtherTask">
+        </div>
+        <div class="form-group">
+            <label for="destination">Select Destination:</label>
+            <select class="form-control" id="destination" name="destination" onchange="toggleDestination(this.value)">
+                <option value="file">Save to Local File</option>
+                <option value="db">Insert into Database</option>
+            </select>
+        </div>
+        <div class="form-group" id="fileGroup">
+            <label for="file_name">File Name:</label>
+            <input type="text" class="form-control" id="file_name" name="file_name" placeholder="output.json">
+        </div>
+        <div class="form-group" id="dbGroup" style="display: none;">
+            <label for="db_name">DB Name:</label>
+            <input type="text" class="form-control" id="db_name" name="db_name" placeholder="MyDB">
+        </div>
+        <button type="submit" class="btn btn-primary">Create Task</button>
+    </form>
+</div>
+
+<script>
+function toggleDestination(dest) {
+    const fileGroup = document.getElementById("fileGroup");
+    const dbGroup = document.getElementById("dbGroup");
+    if (dest === "file") {
+        fileGroup.style.display = "block";
+        dbGroup.style.display = "none";
+    } else {
+        fileGroup.style.display = "none";
+        dbGroup.style.display = "block";
+    }
+}
+</script>
+</body>
+</html>
